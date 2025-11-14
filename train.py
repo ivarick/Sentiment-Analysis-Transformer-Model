@@ -10,6 +10,10 @@ vocab_size = len(vocab_to_int)
 model = TransformerSentiment(vocab_size, max_len=512)
 model.to(device) 
 
+model_save_path = 'model.pth'
+optimizer_save_path = 'optimizer.pth'
+
+
 criterion = nn.BCELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
@@ -27,3 +31,6 @@ for epoch in range(epochs):
         optimizer.step()
         total_loss += loss.item()
     print(f"Epoch {epoch+1}, Loss: {total_loss / len(dataloader)}")
+    torch.save(model.state_dict(), model_save_path)
+    torch.save(optimizer.state_dict(), optimizer_save_path)
+    print(f"Checkpoint saved at step {iter}.")
