@@ -13,7 +13,7 @@ def predict_sentiment(text):
     model.eval()
     processed = preprocess(text)
     encoded = encode(processed)
-    input_tensor = torch.tensor([encoded], dtype=torch.long).to(device)  # Move to device
+    input_tensor = torch.tensor([encoded], dtype=torch.long).to(device)
     src_mask = (input_tensor == 0)
     with torch.no_grad():
         output = model(input_tensor, src_mask).squeeze().item()
@@ -24,4 +24,5 @@ print(predict_sentiment("best movie ever"))  # Expected: Positive
 print(predict_sentiment("besides being boring, the scenes were oppressive and dark."))   # Expected: Negative
 print(predict_sentiment("not a really good acting"))   # Expected: Negative
 print(predict_sentiment("2/10"))   # Expected: Negative
+
 print(predict_sentiment("9/10"))  # Expected: Positive
